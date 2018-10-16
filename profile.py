@@ -41,14 +41,18 @@ for i in range(6):
     node = request.XenVM("head")
     node.routable_control_ip = "true"
     
+     #initiate nfs
+    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpcbind"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpc-statd"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-idmapd"))
+    
     #create folders
     node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))   
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 755 /software"))
-    
-     #initiate nfs
-    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server.service"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server.service"))
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
     
     #delete copy
     node.addService(pg.Execute(shell="sh", command="sudo rm /etc/exports"))
