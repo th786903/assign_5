@@ -66,7 +66,8 @@ for i in range(6):
     node = request.XenVM("storage")
     
     node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 755 /scratch"))
-      
+    node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /local/repository/scratch'"))
+    
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server.service"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server.service"))
