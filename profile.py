@@ -50,6 +50,8 @@ for i in range(6):
   
   else:
     node = request.XenVM("compute-" + str(i-2))
+    node.cores = 4
+    node.ram = 4096
   
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
@@ -122,9 +124,6 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service nfs"))
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
   else:
-
-    node.cores = 4
-    node.ram = 4096
     
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
