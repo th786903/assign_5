@@ -67,7 +67,7 @@ for i in range(6):
   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ssh_setup.sh"))
   node.addService(pg.Execute(shell="sh", command="sudo -H -u ka837933 bash -c '/local/repository/ssh_setup.sh'"))
  
-  node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /users/ka837933'"))
+  # node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /users/ka837933'"))
   
   if i == 0:
      
@@ -112,7 +112,8 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-idmapd"))
     
     node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/* scratch'"))
+    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/hello.c scratch'"))
+    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/machine_list scratch'"))
     
     
     node.addService(pg.Execute(shell="sh", command="sudo echo '/scratch 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)' > etc/exports"))
