@@ -54,11 +54,9 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))   
     node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
     
-    #delete copy
-    node.addService(pg.Execute(shell="sh", command="sudo rm /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/exports_head /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo exportfs -a"))
+    #added export permission
+    node.addService(pg.Execute(shell="sh", command="sudo echo "/software 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)" > etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
     
     #firewall
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service mountd"))
@@ -85,13 +83,11 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-idmapd"))
     
     node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /local/repository/scratch'"))
+    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/* scratch'"))
     
     
-    node.addService(pg.Execute(shell="sh", command="sudo rm /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/exports_head /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo exportfs -a"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo "/scratch 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)" > etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
     
     #firewall
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service mountd"))
