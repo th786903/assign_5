@@ -41,36 +41,6 @@ for i in range(6):
   if i == 0:
     node = request.XenVM("head")
     node.routable_control_ip = "true"
-  
-  elif i == 1:
-    node = request.XenVM("metadata")
-  
-  elif i == 2:
-    node = request.XenVM("storage")
-  
-  else:
-    node = request.XenVM("compute-" + str(i-2))
-    node.cores = 4
-    node.ram = 4096
-  
-  node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
-  
-  iface = node.addInterface("if" + str(i))
-  iface.component_id = "eth1"
-  iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
-  link.addInterface(iface)
-  
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/passwordless.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo /local/repository/passwordless.sh"))
-  
-  # This code segment is added per Benjamin Walker's solution to address the StrictHostKeyCheck issue of ssh
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ssh_setup.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo -H -u ka837933 bash -c '/local/repository/ssh_setup.sh'"))
- 
-  # node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /users/ka837933'"))
-  
-  if i == 0:
-     
     #initiate nfs
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
@@ -94,14 +64,17 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service nfs"))
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
     #mount
-    #node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    #node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
     #install mpi ----------- just testing mounting
     node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
   
+  elif i == 1:
+    node = request.XenVM("metadata")
+  
   elif i == 2:
-    
+    node = request.XenVM("storage")
     #initiate nfs
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
@@ -124,7 +97,11 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service rpc-bind"))
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service nfs"))
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
+  
   else:
+    node = request.XenVM("compute-" + str(i-2))
+    node.cores = 4
+    node.ram = 4096
     
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
@@ -134,12 +111,27 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))
     
     #mount
-    #node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
-    #node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.1:/software /software nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
-    #node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    #node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
-    
-
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.1:/software /software nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
+  
+  node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
+  
+  iface = node.addInterface("if" + str(i))
+  iface.component_id = "eth1"
+  iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
+  link.addInterface(iface)
+  
+  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/passwordless.sh"))
+  node.addService(pg.Execute(shell="sh", command="sudo /local/repository/passwordless.sh"))
+  
+  # This code segment is added per Benjamin Walker's solution to address the StrictHostKeyCheck issue of ssh
+  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ssh_setup.sh"))
+  node.addService(pg.Execute(shell="sh", command="sudo -H -u ka837933 bash -c '/local/repository/ssh_setup.sh'"))
+ 
+  node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /users/ka837933'"))
+  
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
