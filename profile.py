@@ -40,16 +40,55 @@ for i in range(6):
   if i == 0:
     node = request.XenVM("head")
     node.routable_control_ip = "true"
+    
+    #create folders
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))   
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 755 /software"))
+    
+     #initiate nfs
+    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server.service"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server.service"))
+    
+    #delete copy
+    node.addService(pg.Execute(shell="sh", command="sudo rm /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/exports_head /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo exportfs -a"))
+    #mount
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
+    #install mpi
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
   elif i == 1:
     node = request.XenVM("metadata")
   elif i == 2:
     node = request.XenVM("storage")
+    
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 755 /scratch"))
+      
+    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server.service"))
+    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server.service"))
+    
+    node.addService(pg.Execute(shell="sh", command="sudo rm /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/exports_head /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo exportfs -a"))
   else:
     node = request.XenVM("compute-" + str(i-2))
 
     node.cores = 4
-
     node.ram = 4096
+    
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /scratch"))
+    
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
+    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
+    
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/scripts/mpi_path_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo -H -u ka837933 bash -c '/local/repository/scripts/mpi_path_setup.sh'"))
     
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
@@ -60,8 +99,6 @@ for i in range(6):
   
   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/passwordless.sh"))
   node.addService(pg.Execute(shell="sh", command="sudo /local/repository/passwordless.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
   
   # This code segment is added per Benjamin Walker's solution to address the StrictHostKeyCheck issue of ssh
   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ssh_setup.sh"))
@@ -71,6 +108,10 @@ for i in range(6):
 
   # start adding stuff here
   # %%
+
+    
+
+    
   
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
