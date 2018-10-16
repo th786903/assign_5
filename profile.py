@@ -104,8 +104,8 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpcbind"))
     
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /scratch"))
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir /software"))
+    node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))
     
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
