@@ -71,7 +71,7 @@ for i in range(6):
   
   if i == 0:
      
-     #initiate nfs
+    #initiate nfs
     node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
     node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server"))
