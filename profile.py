@@ -69,6 +69,8 @@ for i in range(6):
  
   node.addService(pg.Execute(shell="sh", command="sudo su ka837933 -c 'cp /local/repository/source/* /users/ka837933'"))
 
+  # start adding stuff here
+  # %%
   
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
