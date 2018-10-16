@@ -72,7 +72,7 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
     
     #added export permission
-    node.addService(pg.Execute(shell="sh", command="sudo echo "/software 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)" > etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '/software 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)' > etc/exports"))
     node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
     
     #firewall
@@ -82,7 +82,7 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
     #mount
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo "192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0" >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
     #install mpi ----------- just testing mounting
     node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
@@ -104,7 +104,7 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/* scratch'"))
     
     
-    node.addService(pg.Execute(shell="sh", command="sudo echo "/scratch 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)" > etc/exports"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '/scratch 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)' > etc/exports"))
     node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
     
     #firewall
@@ -126,9 +126,9 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))
     
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo "192.168.1.1:/software /software nfs rw,sync,hard,intr 0 0" >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.1:/software /software nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo "192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0" >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
     
 
 
