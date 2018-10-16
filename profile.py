@@ -113,8 +113,7 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
     node.addService(pg.Execute(shell="sh", command="sudo echo "192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0" >> etc/fstab))
     
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/scripts/mpi_path_setup.sh"))
-    node.addService(pg.Execute(shell="sh", command="sudo -H -u ka837933 bash -c '/local/repository/scripts/mpi_path_setup.sh'"))
+
     
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
