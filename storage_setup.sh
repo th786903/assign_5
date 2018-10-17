@@ -2,10 +2,10 @@
 sudo yum install nfs-utils
 
 # making software directory
-sudo mkdir /var/scratch
+sudo mkdir /scratch
 
 # setting permissions
-sudo chmod -R 777 /var/scratch
+sudo chmod -R 777 /scratch
 
 # setting up nfs
 sudo systemctl enable rpcbind
@@ -18,7 +18,7 @@ sudo systemctl start nfs-lock
 sudo systemctl start nfs-idmap
 
 # setup export directory
-sudo echo "/var/scratch *(rw,sync,no_root_squash,no_all_squash)" > etc/exports
+sudo echo "/scratch *(rw,sync,no_root_squash,no_all_squash)" > etc/exports
 sudo systemctl restart nfs-server
 
 # let nfs service override centos7 firewall
@@ -27,6 +27,6 @@ sudo firewall-cmd --permanent --zone=public --add-service=mountd
 sudo firewall-cmd --permanent --zone=public --add-service=rpc-bind
 sudo firewall-cmd --reload
 
-sudo cp /local/repository/source/hello.c /var/scratch
-sudo cp /local/repository/source/machine_list /var/scratch
+sudo cp /local/repository/source/hello.c /scratch
+sudo cp /local/repository/source/machine_list /scratch
 
