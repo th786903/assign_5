@@ -33,5 +33,5 @@ sudo mkdir -p /mnt/nfs/var/scratch
 sudo mount -t nfs 192.168.1.3:/var/scratch /mnt/nfs/var/scratch
 
 # setup automount
-sudo echo '192.168.1.3:/var/scratch /mnt/nfs/var/scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab
+sudo echo '192.168.1.3:/var/scratch /mnt/nfs/var/scratch nfs defaults 0 0' >> /etc/fstab
 
