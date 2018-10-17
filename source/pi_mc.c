@@ -1,4 +1,3 @@
-%%writefile codes/openmpi/pi_mc.c
 
 #include <stdio.h>
 #include <stdlib.h>
