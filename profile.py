@@ -42,7 +42,7 @@ for i in range(6):
     node = request.XenVM("head")
     node.routable_control_ip = "true"
     
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/head_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/head_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/head_setup.sh"))
     
     #install mpi ----------- just testing mounting
@@ -55,7 +55,7 @@ for i in range(6):
   elif i == 2:
     node = request.XenVM("storage")
     
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/storage_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/storage_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/storage_setup.sh"))
     
   
