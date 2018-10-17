@@ -13,25 +13,28 @@ int main(int argc, char* argv[]) {
   double piEstimate;
   double x_start, y_start;
   double x_rand, y_rand, rand_radius; 
+  double start, stop, tpar, tcomm;  /* timing variables */
   int rank, size, squareWidth;
   MPI_Status status;
+    
+  start = MPI_Wtime(); 
 
   nPointsTotal = atoi(argv[1]);
 
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
-
+  
+  
   // Seed RNG and make calculations for constants
   nPointsPerRegion = nPointsTotal / size;
   srand( (unsigned)time(NULL) + rank ); // seed differently per node
   squareWidth = (int) sqrt(size);
-
   // Place and record points in the circle
   x_start = (double)(rank % squareWidth) / squareWidth;
   y_start = (double)((rank / squareWidth)) / squareWidth;
 
-  printf("Rank %d out of %d has starting x %f and starting y %f on a square of size %d \n", 
+  printf("Rank %d out of %d has starting x %f and starting y %f on a square of size %d\n", 
          rank, size, x_start, y_start, squareWidth);
     
   for (i = 0; i < nPointsPerRegion; i++) {
@@ -42,13 +45,14 @@ int main(int argc, char* argv[]) {
       nPointsInCircle += 1;
     }
   }
-  
+  stop = MPI_Wtime();
+  tcomm += stop - start;
   MPI_Reduce(&nPointsInCircle, &pointsReceived, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (rank == 0) {
     piEstimate = (double)(pointsReceived * 4) / nPointsTotal;
-    printf("%f\n", piEstimate);
+    printf("Estimate is %f\n", piEstimate);
+    printf("Took a total of %lfs\n", tcomm);
   } 
-
   MPI_Finalize();
   return 0;
 }
