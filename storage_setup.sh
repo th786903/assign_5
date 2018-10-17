@@ -19,7 +19,7 @@ sudo systemctl start nfs-lock
 sudo systemctl start nfs-idmap
 
 # setup export directory
-sudo echo "/var/scratch *(rw,sync,no_root_squash)" > etc/exports
+sudo echo "/var/scratch *(rw,sync,no_root_squash,no_all_squash)" > etc/exports
 sudo systemctl restart nfs-server
 
 # let nfs service override centos7 firewall
