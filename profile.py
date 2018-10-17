@@ -46,7 +46,7 @@ for i in range(6):
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/head_setup.sh"))
     
     #install mpi ----------- just testing mounting
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/install_mpi.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
   
   elif i == 1:
@@ -64,7 +64,7 @@ for i in range(6):
     node.cores = 4
     node.ram = 4096
     
-    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/compute_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/compute_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/compute_setup.sh"))
     
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/set_mpi_path.sh"))
