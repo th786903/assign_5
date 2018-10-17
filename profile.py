@@ -66,6 +66,9 @@ for i in range(6):
     
     node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/compute_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/compute_setup.sh"))
+    
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/set_mpi_path.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/set_mpi_path.sh"))
   
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
