@@ -34,5 +34,4 @@ sudo mount -t nfs 192.168.1.3:/var/scratch /mnt/nfs/var/scratch
 # setup automount
 sudo echo "192.168.1.3:/var/scratch /mnt/nfs/var/scratch nfs defaults 0 0" >> /etc/fstab
 
-# permission isn't sticking for some reason
-sudo chmod -R 777 /var/software
+
