@@ -10,7 +10,6 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
-
 tourDescription = \
 """
 This profile provides the template for a full research cluster with head node, scheduler, compute nodes, and shared file systems.
