@@ -5,8 +5,7 @@ sudo yum install nfs-utils
 sudo mkdir /var/scratch
 
 # setting permissions
-sudo chmod -R 755 /var/scratch
-sudo chown nfsnobody:nfsnobody /var/scratch
+sudo chmod -R 777 /var/scratch
 
 # setting up nfs
 sudo systemctl enable rpcbind
