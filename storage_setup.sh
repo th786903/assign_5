@@ -29,3 +29,6 @@ sudo firewall-cmd --reload
 
 sudo cp /local/repository/source/hello.c /var/scratch
 sudo cp /local/repository/source/machine_list /var/scratch
+
+# permission isn't sticking
+sudo chmod -R 777 /var/scratch
