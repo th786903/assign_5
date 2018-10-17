@@ -19,7 +19,7 @@ sudo systemctl start nfs-lock
 sudo systemctl start nfs-idmap
 
 # setup export directory
-sudo echo '/var/software *(rw,sync,no_root_squash)' > etc/exports
+sudo echo "/var/software *(rw,sync,no_root_squash)" > etc/exports
 sudo systemctl restart nfs-server
 
 # let nfs service override centos7 firewall
@@ -33,5 +33,5 @@ sudo mkdir -p /mnt/nfs/var/scratch
 sudo mount -t nfs 192.168.1.3:/var/scratch /mnt/nfs/var/scratch
 
 # setup automount
-sudo echo '192.168.1.3:/var/scratch /mnt/nfs/var/scratch nfs defaults 0 0' >> /etc/fstab
+sudo echo "192.168.1.3:/var/scratch /mnt/nfs/var/scratch nfs defaults 0 0" >> /etc/fstab
 
