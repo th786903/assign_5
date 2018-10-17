@@ -5,8 +5,7 @@ sudo yum install nfs-utils
 sudo mkdir /var/software
 
 # setting permissions
-sudo chmod -R 755 /var/software
-sudo chown nfsnobody:nfsnobody /var/software
+sudo chmod -R 777 /var/software
 
 # setting up nfs
 sudo systemctl enable rpcbind
