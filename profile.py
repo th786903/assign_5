@@ -41,31 +41,10 @@ for i in range(6):
   if i == 0:
     node = request.XenVM("head")
     node.routable_control_ip = "true"
-    #initiate nfs
-    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpcbind"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpc-statd"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-idmapd"))
     
-    #create folders
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))   
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /software"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/head_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/head_setup.sh"))
     
-    #added export permission
-    node.addService(pg.Execute(shell="sh", command="sudo echo '/software 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)' > etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
-    
-    #firewall
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service mountd"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service rpc-bind"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service nfs"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
-    #mount
-    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
     #install mpi ----------- just testing mounting
     node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/install_mpi.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
@@ -75,46 +54,18 @@ for i in range(6):
   
   elif i == 2:
     node = request.XenVM("storage")
-    #initiate nfs
-    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable nfs-server"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpcbind"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-server"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpc-statd"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start nfs-idmapd"))
     
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir -m 777 /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/hello.c scratch'"))
-    node.addService(pg.Execute(shell="sh", command="sudo cp /local/repository/source/machine_list scratch'"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/storage_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/storage_setup.sh"))
     
-    
-    node.addService(pg.Execute(shell="sh", command="sudo echo '/scratch 192.168.1.0/28(rw,sync,no_root_squash) 192.168.1.16(rw,sync,no_root_squash)' > etc/exports"))
-    node.addService(pg.Execute(shell="sh", command="sudo exportfs -r"))
-    
-    #firewall
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service mountd"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service rpc-bind"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --permanent --zone public --add-service nfs"))
-    node.addService(pg.Execute(shell="sh", command="sudo firewall-cmd --reload"))
   
   else:
     node = request.XenVM("compute-" + str(i-2))
     node.cores = 4
     node.ram = 4096
     
-    node.addService(pg.Execute(shell="sh", command="sudo yum -y install nfs-utils libnfsidmap"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl enable rpcbind"))
-    node.addService(pg.Execute(shell="sh", command="sudo systemctl start rpcbind"))
-    
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir /software"))
-    node.addService(pg.Execute(shell="sh", command="sudo mkdir /scratch"))
-    
-    #mount
-    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.1:/software /software"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.1:/software /software nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
-    node.addService(pg.Execute(shell="sh", command="sudo mount 192.168.1.3:/scratch /scratch"))
-    node.addService(pg.Execute(shell="sh", command="sudo echo '192.168.1.3:/scratch /scratch nfs rw,sync,hard,intr 0 0' >> etc/fstab"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/compute_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/compute_setup.sh"))
   
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
