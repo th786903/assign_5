@@ -1,3 +1,5 @@
+#making it sleep so head and storage are set up
+sudo sleep 720
 # installing nfs
 sudo yum install nfs-utils
 
