@@ -45,13 +45,15 @@ int main(int argc, char* argv[]) {
       nPointsInCircle += 1;
     }
   }
+ 
+  MPI_Reduce(&nPointsInCircle, &pointsReceived, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   stop = MPI_Wtime();
   tcomm += stop - start;
-  MPI_Reduce(&nPointsInCircle, &pointsReceived, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (rank == 0) {
     piEstimate = (double)(pointsReceived * 4) / nPointsTotal;
     printf("Estimate is %f\n", piEstimate);
     printf("Took a total of %lfs\n", tcomm);
+    
   } 
   MPI_Finalize();
   return 0;
