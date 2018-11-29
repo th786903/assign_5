@@ -35,7 +35,7 @@ prefixForIP = "192.168.1."
 
 link = request.LAN("lan")
 
-for i in range(15):
+for i in range(5):
   
   if i == 0:
     node = request.XenVM("head")
