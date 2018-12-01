@@ -6,14 +6,24 @@ sudo yum install mariadb-server mariadb-devel -y
 
 # created global users so UID and GID is consistent across every node
 export MUNGEUSER=991
-groupadd -g $MUNGEUSER munge
-useradd  -m -c "MUNGE Uid 'N' Gid Emporium" -d /var/lib/munge -u $MUNGEUSER -g munge  -s /sbin/nologin munge
+sudo groupadd -g $MUNGEUSER munge
+sudo useradd  -m -c "MUNGE Uid 'N' Gid Emporium" -d /var/lib/munge -u $MUNGEUSER -g munge  -s /sbin/nologin munge
 export SLURMUSER=992
-groupadd -g $SLURMUSER slurm
-useradd  -m -c "SLURM workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
+sudo groupadd -g $SLURMUSER slurm
+sudo useradd  -m -c "SLURM workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
 
 # install epel-release because we're using CentOS
 sudo yum install epel-release
 
 # installing munge
 sudo yum install munge munge-libs munge-devel -y
+
+# install tools to create the secret munge key
+sudo yum install rng-tools -y
+sudo rngd -r /dev/urandom
+
+# create key
+sudo /usr/sbin/create-munge-key -r
+sudo dd if=/dev/urandom bs=1 count=1024 > /etc/munge/munge.key
+sudo chown munge: /etc/munge/munge.key
+sudo chmod 400 /etc/munge/munge.key
