@@ -30,5 +30,5 @@ sudo chown -R munge: /etc/munge/ /var/log/munge/
 sudo chmod 0700 /etc/munge/ /var/log/munge/
 
 # starting the service
-systemctl enable munge
-systemctl start munge
+sudo systemctl enable munge
+sudo systemctl start munge
