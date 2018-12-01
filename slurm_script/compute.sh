@@ -24,3 +24,11 @@ do
   sleep 5
 done
 sudo cp /scratch/munge.key /etc/munge
+
+#correcting permissions
+sudo chown -R munge: /etc/munge/ /var/log/munge/
+sudo chmod 0700 /etc/munge/ /var/log/munge/
+
+# starting the service
+systemctl enable munge
+systemctl start munge
