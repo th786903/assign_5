@@ -27,3 +27,10 @@ sudo /usr/sbin/create-munge-key -r
 sudo dd if=/dev/urandom bs=1 count=1024 > /etc/munge/munge.key
 sudo chown munge: /etc/munge/munge.key
 sudo chmod 400 /etc/munge/munge.key
+
+# send the key to shared directory
+sudo cp /etc/munge/munge.key /scratch
+
+# correcting permissions
+chown -R munge: /etc/munge/ /var/log/munge/
+chmod 0700 /etc/munge/ /var/log/munge/
