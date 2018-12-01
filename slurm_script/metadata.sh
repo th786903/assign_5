@@ -17,3 +17,10 @@ sudo yum install epel-release
 
 # installing munge
 sudo yum install munge munge-libs munge-devel -y
+
+# using loop from https://stackoverflow.com/questions/2379829/while-loop-to-test-if-a-file-exists-in-bash
+while [ ! -f /scratch/munge.key ]
+do
+  sleep 5
+done
+sudo cp /scratch/munge.key /etc/munge
