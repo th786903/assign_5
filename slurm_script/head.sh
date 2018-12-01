@@ -34,3 +34,7 @@ sudo cp /etc/munge/munge.key /scratch
 # correcting permissions
 sudo chown -R munge: /etc/munge/ /var/log/munge/
 sudo chmod 0700 /etc/munge/ /var/log/munge/
+
+# starting the service
+sudo systemctl enable munge
+sudo systemctl start munge
