@@ -32,3 +32,15 @@ sudo chmod 0700 /etc/munge/ /var/log/munge/
 # starting the service
 sudo systemctl enable munge
 sudo systemctl start munge
+
+# installing slurm dependencies
+sudo yum install openssl openssl-devel pam-devel numactl numactl-devel hwloc
+hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel man2html
+libibmad libibumad -y
+
+# checking that rpms have been moved then installing them
+while [ ! -f /scratch/rpmMove.txt ] 
+do
+  sleep 5
+done
+sudo yum --nogpgcheck localinstall /software/slurm-rpms/*
