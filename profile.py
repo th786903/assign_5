@@ -39,18 +39,18 @@ for i in range(5):
   
   if i == 0:
     node = request.XenVM("head")
-    node.routable_control_ip = "true"
-    
+    node.routable_control_ip = "true"    
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/head_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/head_setup.sh"))
-    
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/slurm_script/head.sh"))
   
   elif i == 1:
-    node = request.XenVM("metadata")
+    node = request.XenVM("metadata") 
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/slurm_script/metadata.sh"))
+    
   
   elif i == 2:
     node = request.XenVM("storage")
-    
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/storage_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/storage_setup.sh"))
     
@@ -65,6 +65,7 @@ for i in range(5):
     
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/set_mpi_path.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/set_mpi_path.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/slurm_script/compute.sh"))
   
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
   
