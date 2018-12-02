@@ -58,4 +58,4 @@ sudo cp * /software/slurm-rpms
 sudo echo "I am done" > /scratch/rpmMove.txt
 
 # install rpms
-sudo yum --nogpgcheck localinstall /software/slurm-rpms/*
+sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
