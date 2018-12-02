@@ -40,7 +40,7 @@ sudo systemctl enable munge
 sudo systemctl start munge
 
 # installing slurm dependencies
-sudo yum install openssl openssl-devel pam-devel numactl numactl-devel hwloc
+sudo yum install openssl openssl-devel pam-devel numactl numactl-devel hwloc -y
 sudo yum install hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel man2html libibmad libibumad pam-devel 'perl(ExtUtils::Embed)' -y
 
 # installing the LATEST version of slurm into shared software folder
