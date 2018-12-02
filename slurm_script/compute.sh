@@ -42,4 +42,4 @@ while [ ! -f /scratch/rpmMove.txt ]
 do
   sleep 5
 done
-sudo yum --nogpgcheck localinstall /software/slurm-rpms/*
+sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
