@@ -52,7 +52,7 @@ sudo rpmbuild -ta slurm-18.08.3.tar.bz2
 # moving rpms for installation on server and compute nodes
 sudo cd /root/rpmbuild/RPMS/x86_64
 sudo mkdir /software/slurm-rpms
-sudo cp slurm-18.08.3-1.el7.centos.x86_64.rpm slurm-devel-18.08.3-1.el7.centos.x86_64.rpm slurm-munge-18.08.3-1.el7.centos.x86_64.rpm slurm-perlapi-18.08.3-1.el7.centos.x86_64.rpm slurm-plugins-18.08.3-1.el7.centos.x86_64.rpm slurm-sjobexit-18.08.3-1.el7.centos.x86_64.rpm slurm-sjstat-18.08.3-1.el7.centos.x86_64.rpm slurm-torque-18.08.3-1.el7.centos.x86_64.rpm /software/slurm-rpms
+sudo cp * /software/slurm-rpms
 
 #create file to check that rpms have been moved
 sudo echo "I am done" > /scratch/rpmMove.txt
