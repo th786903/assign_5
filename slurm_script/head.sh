@@ -74,3 +74,12 @@ sudo touch /var/log/slurmctld.log
 sudo chown slurm: /var/log/slurmctld.log
 sudo touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
 sudo chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+
+# open slurm default ports
+sudo firewall-cmd --permanent --zone=public --add-port=6817/udp
+sudo firewall-cmd --permanent --zone=public --add-port=6817/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=6818/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=6818/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=7321/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=7321/tcp
+sudo firewall-cmd --reload
