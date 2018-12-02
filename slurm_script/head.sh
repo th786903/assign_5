@@ -52,7 +52,7 @@ sudo yum install rpm-build
 sudo rpmbuild -ta slurm-18.08.3.tar.bz2
 
 # moving rpms for installation on server and compute nodes
-sudo cd /root/rpmbuild/RPMS/x86_64
+cd /root/rpmbuild/RPMS/x86_64
 sudo mkdir /software/slurm-rpms
 sudo cp * /software/slurm-rpms
 
