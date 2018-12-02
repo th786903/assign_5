@@ -47,8 +47,12 @@ for i in range(5):
   
   elif i == 1:
     node = request.XenVM("metadata")
-   # node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/metadata_setup.sh"))
-   # node.addService(pg.Execute(shell="sh", command="sudo /local/repository/metadata_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/metadata_setup.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/metadata_setup.sh"))
+    
+    node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/set_mpi_path.sh"))
+    node.addService(pg.Execute(shell="sh", command="sudo /local/repository/set_mpi_path.sh"))
+    
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/slurm_script/metadata.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/slurm_script/metadata.sh"))
     
