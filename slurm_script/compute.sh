@@ -45,3 +45,10 @@ do
   sleep 5
 done
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
+
+# setting up configurations and files
+sudo mkdir /var/spool/slurmd
+sudo chown slurm: /var/spool/slurmd
+sudo chmod 755 /var/spool/slurmd
+sudo touch /var/log/slurmd.log
+sudo chown slurm: /var/log/slurmd.log
