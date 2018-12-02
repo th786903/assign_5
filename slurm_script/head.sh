@@ -56,8 +56,21 @@ cd /root/rpmbuild/RPMS/x86_64
 sudo mkdir /software/slurm-rpms
 sudo cp * /software/slurm-rpms
 
-#create file to check that rpms have been moved
+# create file to check that rpms have been moved
 sudo echo "I am done" > /scratch/rpmMove.txt
 
 # install rpms
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
+
+# copying slurm.conf file
+cd ~
+sudo cp slurm.conf /etc/slurm
+
+# setting configurations and files
+sudo mkdir /var/spool/slurmctld
+sudo chown slurm: /var/spool/slurmctld
+sudo chmod 755 /var/spool/slurmctld
+sudo touch /var/log/slurmctld.log
+sudo chown slurm: /var/log/slurmctld.log
+sudo touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+sudo chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
