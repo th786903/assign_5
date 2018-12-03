@@ -40,8 +40,34 @@ sudo yum install pam-devel -y
 sudo yum install 'perl(ExtUtils::Embed)' -y
 
 # checking that rpms have been moved then installing them
-while [ ! -f /scratch/rpmMove.txt ]
+while [ ! -f /scratch/rpmMove.txt ] 
 do
   sleep 5
 done
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
+
+# copying slurm.conf file
+cd ~
+sudo cp slurm.conf /etc/slurm
+
+# setting up configurations and files
+sudo mkdir /var/spool/slurmd
+sudo chown slurm: /var/spool/slurmd
+sudo chmod 755 /var/spool/slurmd
+sudo touch /var/log/slurmd.log
+sudo chown slurm: /var/log/slurmd.log
+
+# disabling firewall
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+
+# syncing clocks
+sudo yum install ntp -y
+sudo chkconfig ntpd on
+sudo ntpdate pool.ntp.org
+sudo systemctl start ntpd
+
+# trying to start slurm
+sudo systemctl enable slurmd.service
+sudo systemctl start slurmd.service
+sudo systemctl status slurmd.service
