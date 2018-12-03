@@ -47,12 +47,7 @@ done
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
 
 # copying slurm.conf file
-cd ~
-while [ ! -f slurm.conf ] 
-do
-  sleep 5
-done
-sudo cp slurm.conf /etc/slurm
+sudo cp /local/repository/source/slurm.conf /etc/slurm
 
 
 # setting up configurations and files
