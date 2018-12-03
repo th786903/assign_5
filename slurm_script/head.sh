@@ -3,6 +3,7 @@
 # the folliwng came from https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/
 
 sudo yum install mariadb-server mariadb-devel -y
+#sudo yum intall slurmdbd************************************
 
 # created global users so UID and GID is consistent across every node
 export MUNGEUSER=991
