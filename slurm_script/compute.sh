@@ -61,6 +61,12 @@ sudo chown slurm: /var/log/slurmd.log
 sudo systemctl stop firewalld
 sudo systemctl disable firewalld
 
+# syncing clocks
+sudo yum install ntp -y
+sudo chkconfig ntpd on
+sudo ntpdate pool.ntp.org
+sudo systemctl start ntpd
+
 # trying to start slurm
 sudo systemctl enable slurmd.service
 sudo systemctl start slurmd.service
