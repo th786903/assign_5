@@ -46,6 +46,10 @@ do
 done
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
 
+# copying slurm.conf file
+cd ~
+sudo cp slurm.conf /etc/slurm
+
 # setting up configurations and files
 sudo mkdir /var/spool/slurmd
 sudo chown slurm: /var/spool/slurmd
@@ -56,3 +60,11 @@ sudo chown slurm: /var/log/slurmd.log
 # disabling firewall
 sudo systemctl stop firewalld
 sudo systemctl disable firewalld
+
+# trying to start slurm
+sudo systemctl enable slurmd.service
+sudo systemctl start slurmd.service
+sudo systemctl status slurmd.service
+
+# telling server that services are done
+sudo echo "I am done" > /scratch/compute_done.txt
