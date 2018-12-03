@@ -47,6 +47,8 @@ for i in range(5):
   
   elif i == 1:
     node = request.XenVM("metadata")
+    node.cores = 4
+    node.ram = 4096
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/metadata_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/metadata_setup.sh"))
     
