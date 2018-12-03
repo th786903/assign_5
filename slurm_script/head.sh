@@ -84,6 +84,12 @@ sudo firewall-cmd --permanent --zone=public --add-port=7321/tcp
 sudo firewall-cmd --permanent --zone=public --add-port=7321/tcp
 sudo firewall-cmd --reload
 
+# syncing clocks
+sudo yum install ntp -y
+sudo chkconfig ntpd on
+sudo ntpdate pool.ntp.org
+sudo systemctl start ntpd
+
 # waiting for compute nodes to start, don't know if this is required
 while [ ! -f /scratch/compute_done.txt ] 
 do
