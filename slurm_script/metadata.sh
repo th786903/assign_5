@@ -50,11 +50,18 @@ sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
 sudo cp /local/repository/source/slurm.conf /etc/slurm
 
 # setting up configurations and files
-sudo mkdir /var/spool/slurmd
-sudo chown slurm: /var/spool/slurmd
-sudo chmod 755 /var/spool/slurmd
-sudo touch /var/log/slurmd.log
-sudo chown slurm: /var/log/slurmd.log
+sudo mkdir /var/log/slurm
+sudo chown slurm: /var/log/slurm
+sudo chmod 755 /var/log/slurm
+sudo touch /var/log/slurm/slurmdbd.log
+sudo chown slurm: /var/log/slurm/slurmdbd.log
+sudo touch /var/run/slurmdbd.pid
+sudo chown slurm: /var/run/slurmdbd.pid
+sudo mkdir /accounting_storage
+sudo mkdir /accounting_storage/mysql
+sudo chown slurm: /accounting_storage/mysql
+sudo chmod 755 /accounting_storage/mysql
+
 
 # disabling firewall
 sudo systemctl stop firewalld
@@ -67,6 +74,6 @@ sudo ntpdate pool.ntp.org
 sudo systemctl start ntpd
 
 # trying to start slurm
-sudo systemctl enable slurmd.service
-sudo systemctl start slurmd.service
-sudo systemctl status slurmd.service
+sudo systemctl enable slurmdbd.service
+sudo systemctl start slurmdbd.service
+sudo systemctl status slurmdbd.service
