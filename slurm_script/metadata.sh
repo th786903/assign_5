@@ -74,6 +74,5 @@ sudo ntpdate pool.ntp.org
 sudo systemctl start ntpd
 
 # trying to start slurm
-sudo systemctl enable slurmdbd.service
-sudo systemctl start slurmdbd.service
-sudo systemctl status slurmdbd.service
+# sudo systemctl enable slurmdbd.service
+# sudo systemctl start slurmdbd.service
