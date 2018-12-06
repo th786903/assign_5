@@ -3,6 +3,8 @@
 # the folliwng came from https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/
 
 sudo yum install mariadb-server mariadb-devel -y
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
 
 # created global users so UID and GID is consistent across every node
 export MUNGEUSER=991
@@ -47,6 +49,7 @@ done
 sudo yum --nogpgcheck localinstall /software/slurm-rpms/* -y
 
 # copying slurm.conf file
+sudo cp /local/repository/source/slurm.conf /etc/slurm
 sudo cp /local/repository/source/slurmdbd.conf /etc/slurm
 
 # setting up configurations and files
@@ -57,10 +60,8 @@ sudo touch /var/log/slurm/slurmdbd.log
 sudo chown slurm: /var/log/slurm/slurmdbd.log
 sudo touch /var/run/slurmdbd.pid
 sudo chown slurm: /var/run/slurmdbd.pid
-sudo mkdir /accounting_storage
-sudo mkdir /accounting_storage/mysql
-sudo chown slurm: /accounting_storage/mysql
-sudo chmod 755 /accounting_storage/mysql
+sudo chmod 777 /var/run/slurmdbd.pid
+
 
 
 # disabling firewall
@@ -74,5 +75,5 @@ sudo ntpdate pool.ntp.org
 sudo systemctl start ntpd
 
 # trying to start slurm
-# sudo systemctl enable slurmdbd.service
-# sudo systemctl start slurmdbd.service
+ sudo systemctl enable slurmdbd.service
+ sudo systemctl start slurmdbd.service
