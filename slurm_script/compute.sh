@@ -57,6 +57,10 @@ sudo chmod 755 /var/spool/slurmd
 sudo touch /var/log/slurmd.log
 sudo chown slurm: /var/log/slurmd.log
 
+sudo touch /var/run/slurmd.pid
+sudo chmod 777 /var/run/slurmd.pid
+sudo chown slurm: /var/run/slurmd.pid
+
 # disabling firewall
 sudo systemctl stop firewalld
 sudo systemctl disable firewalld
