@@ -55,9 +55,13 @@ sudo chmod 755 /var/log/slurm
 sudo touch /var/log/slurm/slurmdbd.log
 sudo chown slurm: /var/log/slurm/slurmdbd.log
 sudo chmod 755 /var/log/slurm/slurmdbd.log
+
+# KEEPS ASKING FOR A PID??
 sudo touch /var/run/slurmdbd.pid
 sudo chown slurm: /var/run/slurmdbd.pid
 sudo chmod 777 /var/run/slurmdbd.pid
+
+# copies the innodb.cnf
 sudo cp /local/repository/source/innodb.cnf /etc/my.cnf.d/innodb.cnf
 sudo chown slurm: /etc/my.cnf.d/innodb.cnf
 sudo chmod 777 /etc/my.cnf.d/innodb.cnf
