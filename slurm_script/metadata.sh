@@ -54,9 +54,10 @@ sudo chown slurm: /var/log/slurm
 sudo chmod 755 /var/log/slurm
 sudo touch /var/log/slurm/slurmdbd.log
 sudo chown slurm: /var/log/slurm/slurmdbd.log
-#sudo touch /var/run/slurmdbd.pid
-#sudo chown slurm: /var/run/slurmdbd.pid
-#sudo chmod 777 /var/run/slurmdbd.pid
+sudo chmod 755 /var/log/slurm/slurmdbd.log
+sudo touch /var/run/slurmdbd.pid
+sudo chown slurm: /var/run/slurmdbd.pid
+sudo chmod 777 /var/run/slurmdbd.pid
 
 
 
